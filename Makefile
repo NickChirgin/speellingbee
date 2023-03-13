@@ -1,10 +1,7 @@
-build:	
-	go build -o ./bin/auth ./cmd/auth/main.go
-	go build -o ./bin/cron ./cmd/cron/main.go
-	go build -o ./bin/game ./cmd/game/main.go
-
+build:
+	docker compose build
 run: 
-	./bin/auth
-	./bin/cron
-	./bin/game
+	docker compose up
 
+gen:
+	protoc --go_out=cmd/auth/proto proto/auth.proto --go-grpc_out=cmd/auth/proto proto/auth.proto
