@@ -1,0 +1,25 @@
+version: '1.0'
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: qwerty
+    volumes:
+      - mongo-db:/val/lib/mongo/data
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - redis-db:/val/lib/redis/data
+volumes:
+  redis-db:
+  mongo-db:
