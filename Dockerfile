@@ -18,8 +18,8 @@ COPY . .
 
 RUN go mod tidy
 
-RUN go build -o ./bin/auth ./cmd/auth/main.go
-RUN go build -o ./bin/cron ./cmd/cron/main.go
-RUN go build -o ./bin/game ./cmd/game/main.go
+RUN protoc --go_out=cmd/auth/proto proto/auth.proto --go-grpc_out=cmd/auth/proto proto/auth.proto
 
-CMD ./bin/auth; ./bin/cron; ./bin/game
+RUN go build -o ./bin/auth ./cmd/auth/main.go
+
+CMD ./bin/auth
