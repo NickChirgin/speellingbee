@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -8,6 +9,18 @@ import (
 	"github.com/nickchirgin/spellingbee/cmd/auth/proto/auth"
 	"google.golang.org/grpc"
 )
+
+type AuthServer struct {		
+	auth.UnimplementedAuthServiceServer
+}
+
+func (a *AuthServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.LoginResponse, error) {
+
+
+
+	res := &auth.LoginResponse{AccessToken: " "}
+	return res, nil
+}
 
 func main(){
 	fmt.Println("Auth")
