@@ -10,6 +10,6 @@ COPY . .
 
 RUN go mod tidy
 
-RUN protoc --go_out=cmd/auth/proto proto/auth.proto --go-grpc_out=cmd/auth/proto proto/auth.proto
+RUN protoc --go_out=cmd/auth proto/auth.proto --go-grpc_out=cmd/auth proto/auth.proto
 
 CMD go run cmd/auth/main.go
