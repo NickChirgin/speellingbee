@@ -9,6 +9,7 @@ import (
 
 	"github.com/nickchirgin/spellingbee/cmd/auth/authpb"
 	jwtmanager "github.com/nickchirgin/spellingbee/internal/jwtManager"
+	"github.com/nickchirgin/spellingbee/service/auth"
 	"google.golang.org/grpc"
 )
 
@@ -50,8 +51,9 @@ func main(){
 		log.Fatalf("Error while listening %v", err)
 	}
 	jwt := jwtmanager.NewJWTManager(SecretKey, tokenDuration) 
+	inter := auth.NewAuthInterceptor(jwt)
 	a := NewAuthServer(jwt)
-	s := grpc.NewServer(grpc.UnaryInterceptor(AuthUnaryInterceptor))
+	s := grpc.NewServer(grpc.UnaryInterceptor(inter.Unary()))
 	authpb.RegisterAuthServiceServer(s, a)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
